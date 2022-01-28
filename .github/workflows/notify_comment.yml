@@ -1,10 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Notify Comments on PCR and CS
+name: Notify Comments on PCR
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on comment events on pending response and closing soon issues
+  # Triggers the workflow on comment events on pending response issues
   issue_comment:
     types: [created]
 
@@ -21,6 +21,9 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Run webhook curl command
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_COMMENT_WEBHOOK_URL }}
+          TITLE: ${{github.event.issue.title}}
+          BODY: ${{github.event.comment.body}}
         shell: bash
-        run: curl -v POST ${{ secrets.SLACK_COMMENT_WEBHOOK_URL }} -H "Content-Type:application/json" --data '{"issue":"${{github.event.comment.html_url}}", "title":"${{github.event.issue.title}}", "body":"${{github.event.comment.body}}"}'
-
+        run: curl -vs POST "$WEBHOOK_URL" -H "Content-Type:application/json" --data '{"issue":"${{github.event.comment.html_url}}", "title":"'$TITLE'", "body":"'$BODY'"}' > /dev/null
