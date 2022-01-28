@@ -26,4 +26,4 @@ jobs:
           TITLE: ${{github.event.issue.title}}
           BODY: ${{github.event.comment.body}}
         shell: bash
-        run: curl -v -s POST "$WEBHOOK_URL" -H "Content-Type:application/json" --data '{"issue":"${{github.event.comment.html_url}}", "title":"'$TITLE'", "body":"'$BODY'"}'
+        run: curl -s POST "$WEBHOOK_URL" -H "Content-Type:application/json" --data '{"issue":"${{github.event.comment.html_url}}", "title":"'${TITLE//[\'\"]/&q}'", "body":"'${BODY//[\'\"]/&q}'"}' &> /dev/null
