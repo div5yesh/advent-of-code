@@ -13,4 +13,4 @@ jobs:
         env:
           EVENT: ${{ github.event }}
         shell: bash
-        run: echo ${{ env.EVENT }}
+        run: echo $EVENT
