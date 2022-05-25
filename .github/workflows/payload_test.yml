@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: print
         env:
-          GH_EVENT: ${{ github.event }}
+          GH_EVENT: ${{ fromJson(github.event) }}
         shell: bash
         run: echo $GH_EVENT
