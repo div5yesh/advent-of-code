@@ -6,11 +6,11 @@ on:
     types: [created]
     
 jobs:
-  add_issue:
+  print_payload:
     runs-on: ubuntu-latest
     steps:
       - name: print
         env:
-          EVENT: ${{ github.event }}
+          GH_EVENT: ${{ github.event }}
         shell: bash
-        run: echo $EVENT
+        run: echo $GH_EVENT
