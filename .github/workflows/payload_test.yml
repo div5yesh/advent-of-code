@@ -12,5 +12,8 @@ jobs:
       - name: print
         env:
           GH_EVENT: ${{ toJSON(github.event) }}
+          JOIN_DATA: ${{ join(github.event.issue.labels.*.name) }}
         shell: bash
-        run: echo $GH_EVENT
+        run: |
+          echo $GH_EVENT
+          echo $JOIN_DATA
