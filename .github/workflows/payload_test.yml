@@ -1,0 +1,16 @@
+name: Check event payload
+on:
+  issues:
+    types: [opened, assigned, unassigned, labeled, unlabeled]
+  issue_comment:
+    types: [created]
+    
+jobs:
+  add_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+        env:
+          EVENT: ${{ github.event }}
+        shell: bash
+        run: echo ${{ env.EVENT }}
