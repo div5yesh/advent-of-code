@@ -42,7 +42,6 @@ def solution2(content):
         queue = [head]
         rating = 0
         while len(queue) > 0:
-            visited = set()
             next = queue.pop()
             for dir in [[-1,0], [1,0], [0,-1], [0,1]]:
                 x_next, y_next, step = next[0] + dir[0], next[1] + dir[1], next[2]
@@ -52,8 +51,7 @@ def solution2(content):
                         rating += 1
                         break
 
-                    if step + 1 == int(content[x_next][y_next]) and (x_next, y_next) not in visited:
-                        visited.add((x_next, y_next))
+                    if step + 1 == int(content[x_next][y_next]):
                         queue.append((x_next, y_next, step+1))
         result += rating
 
