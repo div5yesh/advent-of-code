@@ -3,7 +3,7 @@ with open('sample.txt', 'r') as file:
 
 def solution(content):
     result = 0
-
+    print(content)
     return result
 
 def solution2(content):
