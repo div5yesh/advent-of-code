@@ -1,3 +1,7 @@
+import sys
+
+sys.set_int_max_str_digits(50000)
+
 with open('input.txt', 'r') as file:
     content = file.read().split('\n\n')
 
@@ -60,9 +64,71 @@ def solution(content, A=0):
     return ",".join(result)
 
 def solution2(content):
-    result = 0
+    A = 0
+    registers = []
+    data = content[0].split("\n")
+    for dt in data:
+        registers += [int(dt[12:])]
+    program = [int(x) for x in content[1][9:].split(",")]
 
-    return result
+    B = 0
+    C = 0
+    program.reverse()
+    for inst in program:
+        B = B + inst
+        print("A: ", A)
+        B = B ^ 6
+        print("B: ", B)
+        A *= 8
+        print("A: ", A)
+        B = B ^ C
+        print("B: ", B)
+        A = A * (2 ** B)
+        # print("C: ", C)
+        B = B ^ 5
+        print("B: ", B)
+        A = A + B
+        print("C: ", C)
 
-print(solution(content))
+        # A = A + inst
+        # A = A * 8
+
+        # B = A % 8
+        # B = B ^ 5
+        # C = A // 2 ** B
+        # B = B ^ C ^ 6
+        # A = A // 8
+
+        # out = B % 8
+        # JMP 0
+
+    return A
+
+# print(solution(content))
 print(solution2(content))
+
+# 8x + r = 117440
+# (117440/8)%8 = 0
+# (14680/8)%8 = 3
+# (1835/8)%8 = 5
+# (229/8)%8 = 4
+# (28/8)%8 = 3
+# (3/8)%8 = 0
+
+# ((((((((x + 0)8 + 3)8 + 4)8 + 5)8 + 3)8 + 0)8
+
+# B = 200 % 8 = 0
+# B = B ^ 5 = 0 ^ 5 = 5
+# C = 200 // 2 ** 5(B) = 200//32 = 6
+# B = B ^ C = 5 ^ 6 = 3
+# A = 200 // 8 = 25
+# B = B ^ 6 = 3 ^ 6 = 5
+# out = B % 8 = 5 % 8 = 5
+
+# out = 5 * 8 + 5
+# B = 46
+# A = 200 * 8 = 1600
+# B = 46 ^ 6 = 40
+# C = 1600 * 2 ** 40
+# B = 40 ^ 5 = 40
+# B = 1600 * 8
